@@ -2,8 +2,9 @@
 
 class ControladorCurso{
     public function index(){
+        $cursos = Curso::index("cursos");
         $json=array(
-            "detalle"=>"estas en la vista cursos"
+            "detalle"=>$cursos
         );
     
         echo json_encode($json, true);

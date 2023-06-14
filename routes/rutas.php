@@ -47,11 +47,15 @@
             if (array_filter($arrayRutas)[3]=="registro") {
                 switch($_SERVER['REQUEST_METHOD']){
                     /*=========================================
-                    Peticion GET
+                    Peticion POST
                     ===========================================*/
-                    case 'GET': 
+                    case 'POST':
+                        $datos=array(
+                            "nombre"=>$_POST["nombre"], 
+                            "apellido"=>$_POST["apellido"], 
+                            "email"=>$_POST["email"]);
                         $clientes = new ControladorClientes();
-                        $clientes->create();
+                        $clientes->create($datos);
                     break;
                 }
             }

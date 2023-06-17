@@ -4,7 +4,6 @@
     class Cliente{
         static public function index($tabla){
             $stmt=Conexion::conectar()->prepare("SELECT * FROM $tabla");
-
             $stmt->execute();
             return $stmt->fetchAll();
             $stmt->close();
@@ -19,7 +18,7 @@
             $stmt=null;
         }
         static public function create($tabla,$datos){
-            $stmt=Conexion::conectar()->prepare("INSERT INTO clientes(primer_nombre, primer_apellido, email, id_cliente, llave_secreta) 
+            $stmt=Conexion::conectar()->prepare("INSERT INTO $tabla(primer_nombre, primer_apellido, email, id_cliente, llave_secreta) 
             VALUES (:primer_nombre, :primer_apellido, :email, :id_cliente, :llave_secreta)");
 
             $stmt->bindParam(":primer_nombre", $datos["nombre"], PDO::PARAM_STR);

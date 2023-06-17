@@ -1,7 +1,7 @@
 <?php 
 
     $arrayRutas = explode("/", $_SERVER['REQUEST_URI']);
-  
+
     if (count(array_filter($arrayRutas))==2) {
 
         /*=========================================
@@ -28,15 +28,28 @@
                     Peticion GET
                     ===========================================*/
                     case 'GET': 
-                        $cursos = new ControladorCurso();
-                        $cursos->index();
+                        if(isset($_GET["pagina"]) && is_numeric($_GET["pagina"])){
+                            $cursos=new ControladorCurso();
+                            $cursos->index($_GET["pagina"]);
+                        }else {
+                            $cursos = new ControladorCurso();
+                            $cursos->index(null);
+                        }
+                        
                     break;
                     /*=========================================
                     Peticion POST
                     ===========================================*/
-                    case 'POST': 
+                    case 'POST':
+                        $datos=array(
+                            "titulo"=>$_POST["titulo"], 
+                            "descripcion"=>$_POST["descripcion"], 
+                            "instructor"=>$_POST["instructor"],
+                            "imagen"=>$_POST["imagen"], 
+                            "precio"=>$_POST["precio"]
+                        );
                         $cursos = new ControladorCurso();
-                        $cursos->create();
+                        $cursos->create($datos);
                     break;
                 }
             }
@@ -76,8 +89,10 @@
                     Peticion PUT
                     ===========================================*/
                     case 'PUT': 
+                        $datos=array();
+                        parse_str(file_get_contents('php://input'), $datos);
                         $cursos = new ControladorCurso();
-                        $cursos->update(array_filter($arrayRutas)[4]);
+                        $cursos->update($datos,array_filter($arrayRutas)[4]);
                     break;
                     /*=========================================
                     Peticion DELETE
@@ -86,7 +101,7 @@
                         $cursos = new ControladorCurso();
                         $cursos->delete(array_filter($arrayRutas)[4]);
                     break;
-                     
+                        
                 }
             }
         }

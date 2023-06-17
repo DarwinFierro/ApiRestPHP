@@ -2,7 +2,7 @@
 class Conexion{
     static public function conectar(){
         try{
-            $link = new PDO("mysql:local=localhost;dbname=api-rest","root","");
+            $link = new PDO("mysql:local=localhost;dbname=apirest","root","");
             $link->exec("set names utf8");
             return $link;
         }catch(Exception $e){

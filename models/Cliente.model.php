@@ -17,6 +17,16 @@
             $stmt->close();
             $stmt=null;
         }
+
+        static public function validarCliente($tabla, $usuario, $clave){
+            $stmt=Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE id_cliente='$usuario' AND llave_secreta='$clave';");
+
+            $stmt->execute();
+            return $stmt->fetchAll();
+            $stmt->close();
+            $stmt=null;
+        }
+
         static public function create($tabla,$datos){
             $stmt=Conexion::conectar()->prepare("INSERT INTO $tabla(primer_nombre, primer_apellido, email, id_cliente, llave_secreta) 
             VALUES (:primer_nombre, :primer_apellido, :email, :id_cliente, :llave_secreta)");

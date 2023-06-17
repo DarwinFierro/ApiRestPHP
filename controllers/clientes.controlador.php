@@ -1,7 +1,6 @@
 <?php
 class ControladorClientes{
-    public function create($datos)
-    {
+    public function create($datos){
         /*=========================================
         Validando Nombre
         ===========================================*/
@@ -83,5 +82,17 @@ class ControladorClientes{
     
             return;
         }
+    }
+
+    public function validarCliente($id_cliente, $llave_secreta){
+        $cursos = Cliente::validarCliente("cliente", $id_cliente, $llave_secreta);
+            $json = array(
+                "status"=> 200,
+                "total_registros"=>count($cursos),
+                "detalle" => $cursos
+            );
+
+            echo json_encode($json, true);
+            return;
     }
 }
